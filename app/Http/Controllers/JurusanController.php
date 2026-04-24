@@ -7,14 +7,21 @@ use Illuminate\Http\Request;
 
 class JurusanController extends Controller
 {
-   public function index(Request $request)
-{
-    $jurusans = Jurusan::when($request->search, function($query) use ($request) {
-        $query->where('nama_jurusan', 'like', '%'.$request->search.'%');
-    })->paginate(5);
-    
-    return view('jurusan.index', compact('jurusans'));
-}    public function store(Request $request)
+    public function index(Request $request)
+    {
+        $jurusans = Jurusan::when($request->search, function($query) use ($request) {
+            $query->where('nama_jurusan', 'like', '%'.$request->search.'%');
+        })->paginate(5);
+        
+        return view('jurusan.index', compact('jurusans'));
+    }
+
+    public function create()
+    {
+        return view('jurusan.create');
+    }
+
+    public function store(Request $request)
     {
         $request->validate([
             'nama_jurusan' => 'required',
